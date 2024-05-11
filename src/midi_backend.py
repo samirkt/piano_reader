@@ -1,4 +1,5 @@
 import pygame.midi
+import time
 
 class MidiBackend:
     def __init__(self, midi_input_id):
@@ -16,3 +17,10 @@ class MidiBackend:
                 else:
                     self.notes.remove(note_number)
         return self.notes
+
+class TestMidiBackend:
+    def __init__(self, midi_input_id):
+        self.notes = set()
+
+    def poll_input(self):
+        return [int(time.time() // 4 % 4) + 40]
