@@ -1,21 +1,34 @@
 import random
+from enum import Enum
+
+NOTE_NAMES = [
+    ["C"],
+    ["C#","C#/Db"],
+    ["D"],
+    ["Eb", "D#/Eb"],
+    ["E"],
+    ["F"],
+    ["F#", "F#/Gb"],
+    ["G"],
+    ["Ab", "G#/Ab"],
+    ["A"],
+    ["Bb", "A#/Bb"],
+    ["B"],
+]
+
+class ChordForms(Enum):
+    major = ["", [0,4,7]]
+    minor = ["m", [0,3,7]]
+    major7 = ["maj7", [0,4,7,11]]
+    minor7 = ["m7", [0,3,7,10]]
+    dom7 = ["7", [0,4,7,10]]
+    maj6 = ["6", [0,4,7,9]]
+
 
 class ChordTester:
     def __init__(self):
-        self.chords = {
-            "C": {"C"},
-            "Dm": {"D"},
-            "Em": {"E"},
-            "F": {"F"},
-            "G": {"G"},
-            "Am": {"A"},
-            #"C": {"C", "E", "G"},
-            #"Dm": {"D", "F", "A"},
-            #"Em": {"E", "G", "B"},
-            #"F": {"F", "A", "C"},
-            #"G": {"G", "B", "D"},
-            #"Am": {"A", "C", "E"},
-        }
+        self.generate_chord_map()
+        print(self.chords)
         assert len(self.chords) > 1, "Must define more than 1 chords"
         self.current_chord = None
         self.current_chord_notes = set()
@@ -37,7 +50,18 @@ class ChordTester:
 
         return correct, incorrect, success
 
+    def generate_chord_map(self):
+        self.chords = {}
+
+        for i, note in enumerate(NOTE_NAMES):
+            for chord_form in ChordForms:
+                _chord_form = chord_form.value
+                chord_name = note[0] + _chord_form[0]
+                notes = {self.note_number_to_name(i+x) for x in _chord_form[1]} # offset notes by root of chord
+
+                self.chords[chord_name] = notes
+
     @staticmethod
     def note_number_to_name(note_number):
-        note_names = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
-        return note_names[note_number % 12]
+        return NOTE_NAMES[note_number % 12][-1]
+    
