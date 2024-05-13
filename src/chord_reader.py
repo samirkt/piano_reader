@@ -32,6 +32,9 @@ class ChordReader:
 
         self.generate_maps()
         print(self.chord_map)
+        print(self.note_map)
+        print(len(self.chord_map))
+        print(len(self.note_map))
         assert len(self.chord_map) > 1, "Must define more than 1 chords"
         self.current_chord = None
         self.current_chord_notes = set()
