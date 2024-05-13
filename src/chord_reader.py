@@ -67,6 +67,9 @@ class ChordReader:
                 notes = {self.note_number_to_name(i+x) for x in _chord_form[1]} # offset notes by root of chord
 
                 self.chords[chord_name] = notes
+    
+    def get_chord(self, notes):
+        pass
 
     @staticmethod
     def note_number_to_name(note_number):

@@ -11,5 +11,21 @@ class TestChordReader(unittest.TestCase):
         correct, incorrect, success = self.chord_reader.compare_notes(notes)
         self.assertTrue(success)
 
+        notes = [0,4,7]
+        correct, incorrect, success = self.chord_reader.compare_notes(notes)
+        self.assertTrue(success)
+
+        notes = [0,4,6,7]
+        correct, incorrect, success = self.chord_reader.compare_notes(notes)
+        self.assertFalse(success)
+
+        notes = [0,4,6]
+        correct, incorrect, success = self.chord_reader.compare_notes(notes)
+        self.assertFalse(success)
+
+        notes = [0,4]
+        correct, incorrect, success = self.chord_reader.compare_notes(notes)
+        self.assertFalse(success)
+
 if __name__ == "__main__":
     unittest.main()
