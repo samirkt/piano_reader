@@ -23,4 +23,5 @@ class TestMidiBackend:
         self.notes = set()
 
     def poll_input(self):
-        return [int(time.time() // 4 % 4) + 40]
+        base = int(time.time() // 4 % 4) + 40
+        return [base, base + 4, base + 7]
