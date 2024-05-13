@@ -25,7 +25,7 @@ class ChordForms(Enum):
     maj6 = ["6", [0,4,7,9]]
 
 
-class ChordTester:
+class ChordReader:
     def __init__(self):
         self.generate_chord_map()
         print(self.chords)

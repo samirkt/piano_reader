@@ -1,6 +1,6 @@
 import time
 
-from chord_tester import ChordTester
+from chord_reader import ChordReader
 
 
 class GameState:
@@ -14,13 +14,13 @@ class ChordGameFSM:
 
     def __init__(self, display):
         self.display = display
-        self.chord_tester = ChordTester()
+        self.chord_reader = ChordReader()
         self.state = GameState.INIT
         self.start_time = 0
         self.current_chord_name = ""
 
     def step(self, notes):
-        correct, incorrect, success = self.chord_tester.compare_notes(notes)
+        correct, incorrect, success = self.chord_reader.compare_notes(notes)
 
         self.update_display(self.current_chord_name, correct, incorrect)
         self.state_handler(success, notes)
@@ -42,7 +42,7 @@ class ChordGameFSM:
     
     def state_handler(self, success, notes):
             if self.state == GameState.INIT:
-                self.current_chord_name, _ = self.chord_tester.select_random_chord()
+                self.current_chord_name, _ = self.chord_reader.select_random_chord()
                 self.state = GameState.WAITING
             elif self.state == GameState.WAITING:
                 if success:
@@ -55,5 +55,5 @@ class ChordGameFSM:
                     self.state = GameState.UPDATING
             elif self.state == GameState.UPDATING:
                 if not notes:
-                    self.current_chord_name, _ = self.chord_tester.select_random_chord()
+                    self.current_chord_name, _ = self.chord_reader.select_random_chord()
                     self.state = GameState.WAITING
