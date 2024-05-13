@@ -62,19 +62,9 @@ class PianoDisplay:
             pygame.draw.line(self.screen, (0, 0, 0), (60, PianoConfig.OFFSET + PianoConfig.INTERVAL * i), (260, PianoConfig.OFFSET + PianoConfig.INTERVAL * i))
             pygame.draw.line(self.screen, (0, 0, 0), (60, PianoConfig.OFFSET + PianoConfig.INTERVAL * (7 + i)), (260, PianoConfig.OFFSET + PianoConfig.INTERVAL * (7 + i)))
 
-    def draw_notes(self, notes):
-        _notes = {(note, (0, 255, 0)) for note in notes}
-
-        for note_tup in _notes:
-            note, color = note_tup
-            note_pos = self.key_map[note] - (PianoConfig.INTERVAL * 0.5)
-            txt = self.font.render(self.note_map[note % 12], True, color)
-            self.screen.blit(txt, (20, note_pos - 15))
-            self.screen.blit(self.note_image, (100, note_pos))
-            if note == 60:
-                pygame.draw.line(self.screen, (0, 0, 0), (100, PianoConfig.MIDDLE_C), (100 + self.note_image.get_width(), PianoConfig.MIDDLE_C))
-        
-    def draw_note_accuracy(self, correct_notes, incorrect_notes):
+    def draw_notes(self, correct_notes, incorrect_notes=None):
+        if incorrect_notes is None:
+            incorrect_notes = []
         _correct = {(note, (0, 255, 0)) for note in correct_notes}
         _incorrect = {(note, (255, 0, 0)) for note in incorrect_notes}
         notes = _correct | _incorrect

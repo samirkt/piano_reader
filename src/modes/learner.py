@@ -27,7 +27,7 @@ class ChordGameFSM:
 
     def update_display(self, chord_name, correct_notes, incorrect_notes):
         self.display.display_chord(chord_name)
-        self.display.draw_note_accuracy(correct_notes, incorrect_notes)
+        self.display.draw_notes(correct_notes, incorrect_notes)
         self.display_state_feedback(correct_notes, incorrect_notes)
 
     #-------------------------------------
