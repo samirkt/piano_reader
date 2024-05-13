@@ -44,9 +44,16 @@ class ChordReader:
         # Normalize played notes to note names
         notes = {(note, self.note_number_to_name(note)) for note in played_notes}
 
-        correct = {note[0] for note in notes if note[1] in self.current_chord_notes}
-        incorrect = {note[0] for note in notes if note[1] not in self.current_chord_notes}
-        success = (len(correct) == len(self.current_chord_notes)) & (len(incorrect) == 0)
+        chk = self.current_chord_notes.copy()
+        correct, incorrect = set(), set()
+        for note in notes:
+            if note[1] in self.current_chord_notes:
+                correct.add(note[0])
+                chk.discard(note[1])
+            else:
+                incorrect.add(note[0])
+
+        success = (len(chk) == 0) & (len(incorrect) == 0)
 
         return correct, incorrect, success
 
