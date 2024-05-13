@@ -1,4 +1,6 @@
+import os
 import pygame
+import src
 
 
 class PianoConfig:
@@ -11,7 +13,9 @@ class PianoConfig:
 
     @staticmethod
     def load_resources():
-        note_im_raw = pygame.image.load('whole-note.png')
+        # Get path to note image based on src directory location
+        note_path = os.path.join(os.path.dirname(src.__file__), 'whole-note.png')
+        note_im_raw = pygame.image.load(note_path)
         w, h = note_im_raw.get_rect().size
         return pygame.transform.scale(note_im_raw, ((w * 20) // h, 20))
 

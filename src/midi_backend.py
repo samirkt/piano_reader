@@ -2,7 +2,7 @@ import pygame.midi
 import time
 
 class MidiBackend:
-    def __init__(self, midi_input_id):
+    def __init__(self, midi_input_id=0):
         pygame.midi.init()
         self.midi_input = pygame.midi.Input(midi_input_id)
         self.notes = set()
@@ -19,7 +19,7 @@ class MidiBackend:
         return self.notes
 
 class TestMidiBackend:
-    def __init__(self, midi_input_id):
+    def __init__(self, midi_input_id=0):
         self.notes = set()
 
     def poll_input(self):
