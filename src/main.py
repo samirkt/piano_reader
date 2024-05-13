@@ -1,4 +1,6 @@
+import argparse
 import config
+import midi_backend
 from modes.learner import ChordGameFSM
 from piano_display import PianoDisplay
 import pygame
@@ -6,9 +8,9 @@ import sys
 
 
 class ReaderFSM:
-    def __init__(self):
+    def __init__(self, midi_backend):
         device_id = 0  # Change as needed for your MIDI device
-        self.midi_backend = config.MIDI_BACKEND_CLS(device_id)
+        self.midi_backend = midi_backend
         self.display = PianoDisplay()
 
         mode = config.START_MODE
@@ -40,5 +42,14 @@ class ReaderFSM:
         pass
 
 if __name__ == "__main__":
-    reader = ReaderFSM()
+    # Check for command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--test", action="store_true", help="Use test MIDI backend")
+    args = parser.parse_args()
+    if args.test:
+        midi = midi_backend.TestMidiBackend()
+    else:
+        midi = midi_backend.MidiBackend()
+
+    reader = ReaderFSM(midi)
     reader.run()
